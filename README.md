@@ -31,7 +31,7 @@ The API consists of two classes: `Image` and `Resizer`.
 ### Image
 Image is a read-only file-like class that abstracts loading images from various sources such as URLs.
 
-#### Instance variables
+#### Attributes
 - `ext`: The extension of the image.
 - `size`: A two-tuple containing the width and height of the image.
 - `pil_image`: The PIL Image object for this image.
@@ -44,10 +44,10 @@ Constructs a new Image object from the given source.
 	- URL of an image.
 	- Path to an image in the local file system.
 	- A PIL Image object.
-	- A file-like object.
+	- A readable file-like object.
 
-#### *Image*.read([size])
-Read at most `size` bytes from the image (less if EOF is hit).
+#### *Image*.read(size=None)
+Read at most `size` bytes from the image (less if EOF is hit). If `size` is omitted or negative, reads all the data. The bytes are returned as a string object.
 
 #### *Image*.close()
 Closes the image. Attempting to do further operations raises a `ValueError`.
@@ -55,9 +55,18 @@ Closes the image. Attempting to do further operations raises a `ValueError`.
 ### Resizer
 Resizer is a utility class that helps resizing images to a set of given sizes.
 
-#### Instance variables
-- `sizes`: A dict containing two-tuples (width, height) and three-tuples (width, height, format) for each of the sizes (keys). 
-- `precise`: A boolean indicating what to do with images of different aspect ratios than what given sizes. If False, the given sizes' width and height are treated as "max width" and "max height". If True, trying to resize images of a different aspect ratio will throw a `ValueError` or crop the images depending on the `crop` variable.
+#### Attributes
+- `sizes`: A dict containing two-tuples (width, height) and/or three-tuples (width, height, format) for each of the sizes (keys). If format is specified for a size, the result image will always be in that format. Otherwise, it remains in the original image's format.
+- `adaption_mode`: A string indicating what to do with images that are smaller than some of the sizes.
+	
+	- `"ignore"`: Don't generate an image for the sizes that are larger
+				  than this one.
+	- `"resize"`: Resize the image to be as large as the larger sizes.
+	- `"downsize"`: Let the images for the larger sizes be smaller than
+				    the size.
+	- `"throw"`: Throw a `ValueError` if the image is smaller than at
+				 least one of the sizes.
+- `precise`: A boolean indicating what to do with images of different aspect ratios than the given sizes. If False, the given sizes' width and height are treated as "max width" and "max height". If True, trying to resize images of a different aspect ratio will throw a `ValueError` or crop the images depending on the `crop` attribute.
 - `crop`: A boolean indicating whether the images should be automatically cropped to fit the given dimensions or not. If True, images of a different aspect ratio are cropped to the closest possible width and height that fit the aspect ratios.
 
     Example:
@@ -80,7 +89,7 @@ Resizer is a utility class that helps resizing images to a set of given sizes.
         # Previous line threw a ValueError, so this line is not reached.
 
 #### Resizer(sizes=None, crop=False, precise=False)
-Constructs a new resizer for the with the given sizes and configurations. See the instance variables section above for information about the arguments.
+Constructs a new resizer for the with the given sizes and configurations. See the Attributes section above for information about the arguments.
 
 #### *Resizer*.resize_image(image)
 Resizes `image` to each of the sizes.
@@ -89,4 +98,4 @@ Resizes `image` to each of the sizes.
 - `image`: Must be either an Image object or something the Image constructor can take as its `source` argument.
 
 ##### Return value
-A dict similar to the resizer's `sizes` attribute with the only difference being that the tuples have been replaced with Image objects (the results of the resizing).
+A dict similar to the resizer's `sizes` attribute with the only differences being that the tuples have been replaced with Image objects (the results of the resizing) and some keys might be missing because of the image being smaller than the sizes (see the `adaption_mode` attribute).
