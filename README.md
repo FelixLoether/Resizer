@@ -1,12 +1,12 @@
-# TIP (title in progress)
-TIP helps you:
+# Resizer
+Resizer helps you:
 
 - generate thumbnails, palmnails, and more
 - load images from various sources
 
 ## Sample
 
-    from tip import Resizer
+    from resizer import Resizer
     
     resizer = Resizer({
     	'thumbnail': (50, 50, 'jpeg'),

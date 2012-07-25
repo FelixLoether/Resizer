@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(
-    name='TIP (title in progress)',
+    name='Resizer',
     version='0.0.1',
-    description='TIP helps you generate thumbnails and '
+    description='Resizer helps you generate thumbnails and '
                 'load images from various sources.',
-    packages=['tip'],
+    packages=['resizer'],
     platforms='any',
     install_requires=['PIL>=1.1.6']
 )
