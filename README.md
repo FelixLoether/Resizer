@@ -1,5 +1,4 @@
 # TIP (title in progress)
-
 TIP helps you:
 
 - generate thumbnails, palmnails, and more
@@ -7,21 +6,17 @@ TIP helps you:
 
 ## Sample
 
-    from tip import Image, Resizer
+    from tip import Resizer
     
-    resizer = Resizer(
-    	crop=True,
-    	sizes={
-    		'thumbnail': (50, 50, 'jpeg'),
-    		'small': (100, 100, 'png'),
-    	}
-    )
+    resizer = Resizer({
+    	'thumbnail': (50, 50, 'jpeg'),
+    	'small': (100, 100, 'png'),
+    })
     
-    image = Image('http://placekitten.com/300/200')
-    images = resizer.resize_image(image)
+    images = resizer.resize_image('http://placekitten.com/300/200')
     
     for (k, im) in images.iteritems():
-    	print '%s.%s: (%s, %s)' % (k, im.ext, *im.size)
+    	print '{0}.{1}: {2}'.format(k, im.ext, im.size)
     	with open('%s.%s' % (k, im.ext), 'wb') as f:
     		f.write(im.read())
 
@@ -29,3 +24,69 @@ The above code creates two cropped versions of the image loaded from the URL and
 
     thumbnail.jpeg: (50, 50)
     small.png: (100, 100)
+    
+## API Reference
+The API consists of two classes: `Image` and `Resizer`.
+
+### Image
+Image is a read-only file-like class that abstracts loading images from various sources such as URLs.
+
+#### Instance variables
+- `ext`: The extension of the image.
+- `size`: A two-tuple containing the width and height of the image.
+- `pil_image`: The PIL Image object for this image.
+
+#### Image(source)
+Constructs a new Image object from the given source.
+
+##### Parameters
+- `source`: One of the following:
+	- URL of an image.
+	- Path to an image in the local file system.
+	- A PIL Image object.
+	- A file-like object.
+
+#### *Image*.read([size])
+Read at most `size` bytes from the image (less if EOF is hit).
+
+#### *Image*.close()
+Closes the image. Attempting to do further operations raises a `ValueError`.
+
+### Resizer
+Resizer is a utility class that helps resizing images to a set of given sizes.
+
+#### Instance variables
+- `sizes`: A dict containing two-tuples (width, height) and three-tuples (width, height, format) for each of the sizes (keys). 
+- `precise`: A boolean indicating what to do with images of different aspect ratios than what given sizes. If False, the given sizes' width and height are treated as "max width" and "max height". If True, trying to resize images of a different aspect ratio will throw a `ValueError` or crop the images depending on the `crop` variable.
+- `crop`: A boolean indicating whether the images should be automatically cropped to fit the given dimensions or not. If True, images of a different aspect ratio are cropped to the closest possible width and height that fit the aspect ratios.
+
+    Example:
+        
+        r = Resizer(precise=True, crop=True, sizes={'small': (50, 50)})
+        imgs = r.resize_image('http://placekitten.com/300/200')
+        # imgs is now {'small': Image(…)} where the image was obtained
+        # by cropping the source image to (200, 200) and then resizing
+        # it to (50, 50).
+        
+        r.precise = False
+        r.crop = False
+        imgs = r.resize_image('http://placekitten.com/300/200')
+        # imgs is now {'small': Image(…)} where the image was obtained
+        # by resizing the image to (50, 33).
+        
+        r.precise = True
+        r.crop = False
+        imgs = r.resize_image('http://placekitten.com/300/200')
+        # Previous line threw a ValueError, so this line is not reached.
+
+#### Resizer(sizes=None, crop=False, precise=False)
+Constructs a new resizer for the with the given sizes and configurations. See the instance variables section above for information about the arguments.
+
+#### *Resizer*.resize_image(image)
+Resizes `image` to each of the sizes.
+
+##### Parameters
+- `image`: Must be either an Image object or something the Image constructor can take as its `source` argument.
+
+##### Return value
+A dict similar to the resizer's `sizes` attribute with the only difference being that the tuples have been replaced with Image objects (the results of the resizing).
