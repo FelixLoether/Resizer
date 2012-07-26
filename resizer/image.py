@@ -1,6 +1,9 @@
 import urllib2
+from collections import namedtuple
 from StringIO import StringIO
 from PIL import Image as pil_image
+
+Size = namedtuple('Size', 'width height')
 
 
 class Image(object):
@@ -19,6 +22,18 @@ class Image(object):
 
         format = self._pil_image.format
         self.ext = format.lower() if format else None
+
+    @property
+    def size(self):
+        return Size(*self._pil_image.size)
+
+    @property
+    def width(self):
+        return self.size.width
+
+    @property
+    def height(self):
+        return self.size.height
 
     def _load_from_image(self, source):
         self._load_from_pil_image(source._pil_image)
