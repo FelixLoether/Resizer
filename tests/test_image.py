@@ -25,7 +25,7 @@ class TestImage(object):
         assert self.image.height == self.pil_image.size[1]
 
     def test_loading_from_url_loads_from_url(self):
-        url = 'http://nonexistant/image.jpeg'
+        url = 'http://nonexistent/image.jpeg'
         loaded_url = (
             flexmock(urllib2)
             .should_receive('urlopen')
@@ -36,7 +36,7 @@ class TestImage(object):
         loaded_url.verify()
 
     def test_loading_from_url_loads_correct_data(self):
-        url = 'http://nonexistant/image.jpeg'
+        url = 'http://nonexistent/image.jpeg'
         (flexmock(urllib2)
             .should_receive('urlopen')
             .and_return(flexmock(read=lambda: self.test_image_data))
@@ -46,7 +46,7 @@ class TestImage(object):
         assert image.ext == 'jpeg'
 
     def test_loading_from_file_path_calls_pil_open(self):
-        path = 'tests/nonexistant.png'
+        path = 'tests/nonexistent.png'
         opened = (
             flexmock(pil_image)
             .should_receive('open')
@@ -57,7 +57,7 @@ class TestImage(object):
         opened.verify()
 
     def test_loading_from_file_path_loads_correct_data(self):
-        path = 'tests/nonexistant.png'
+        path = 'tests/nonexistent.png'
         (flexmock(pil_image)
             .should_receive('open')
             .with_args(path)
