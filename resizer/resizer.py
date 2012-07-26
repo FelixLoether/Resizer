@@ -53,8 +53,8 @@ class Resizer(object):
         # We know the image isn't smaller than this size and that the width and
         # height of this size should be treated as "max width" and "max
         # height".
-        image = Image(source)
-        image.thumbnail(size, self.resize_mode)
+        size = self._get_projected_size(source, size)
+        image = Image(source.resize(size, self.resize_mode))
         image.ext = ext
         return image
 
@@ -75,7 +75,7 @@ class Resizer(object):
     def _handle_crop(self, source, size, ext):
         width, height = self._get_projected_size(size, source)
         return self._handle_common(
-            source.crop((0, 0, width, height)), size, ext
+            Image(source.crop((0, 0, width, height))), size, ext
         )
 
     def _get_crop_size(self, source, size):
