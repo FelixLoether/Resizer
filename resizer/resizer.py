@@ -1,14 +1,17 @@
+from PIL.Image import ANTIALIAS
 from .image import Image, Size
 
 
 class Resizer(object):
     def __init__(self, sizes=None, crop=False, precise=False,
-                 default_format='png', adaption_mode='downsize'):
+                 default_format='png', adaption_mode='downsize',
+                 resize_mode=ANTIALIAS):
         self.sizes = sizes
         self.crop = crop
         self.precise = precise
         self.default_format = default_format
         self.adaption_mode = adaption_mode
+        self.resize_mode = resize_mode
 
     def resize_image(self, image):
         if self.sizes is None:
@@ -51,7 +54,7 @@ class Resizer(object):
         # height of this size should be treated as "max width" and "max
         # height".
         image = Image(source)
-        image.thumbnail(size)
+        image.thumbnail(size, self.resize_mode)
         image.ext = ext
         return image
 

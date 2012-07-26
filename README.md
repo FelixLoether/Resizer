@@ -49,6 +49,7 @@ Resizer is a utility class that helps resizing images to a set of given sizes.
 
 #### Attributes
 - `default_format`: Format used when no other format is specified.
+- `resize_mode`: Which mode should be used for resizing. One of `PIL.Image.ANTIALIAS` (default), `PIL.Image.NEAREST`, `PIL.Image.BICUBIC`, `PIL.Image.BILINEAR`.
 - `sizes`: A dict containing two-tuples (width, height) and/or three-tuples (width, height, format) for each of the sizes (keys). If format is specified for a size, the result image will always be in that format. Otherwise, it remains in the original image's format.
 - `adaption_mode`: A string indicating what to do with images that are smaller than some of the sizes.
 	
@@ -81,7 +82,7 @@ Resizer is a utility class that helps resizing images to a set of given sizes.
         imgs = r.resize_image('http://placekitten.com/300/200')
         # Previous line threw a ValueError, so this line is not reached.
 
-#### Resizer(sizes=None, crop=False, precise=False, default_format='png', adaption_mode='downsize')
+#### Resizer(sizes=None, crop=False, precise=False, default_format='png', adaption_mode='downsize', resize_mode=ANTIALIAS)
 Constructs a new resizer for the with the given sizes and configurations. See the Attributes section above for information about the arguments.
 
 #### *Resizer*.resize_image(image)
