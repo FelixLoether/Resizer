@@ -106,14 +106,17 @@ class Resizer(object):
         return self._handle_common(*args)
 
     def _handle_resize_adaption(self, source, size, ext):
-        width, height = self._get_projected_size(source, size)
-        image = source.resize(width, height)
-        return self._handle_common(image, size, ext)
+        width, height = self._get_projected_size(source, size, smallest=False)
+        image = Image(source.resize((width, height), self.resize_mode))
+        return self._handle_size(image, size, ext)
 
-    def _get_projected_size(self, small, large):
+    def _get_projected_size(self, small, large, smallest=True):
         width_ratio = float(large.width) / small.width
         height_ratio = float(large.height) / small.height
-        ratio = min(width_ratio, height_ratio)
+        if smallest:
+            ratio = min(width_ratio, height_ratio)
+        else:
+            ratio = max(width_ratio, height_ratio)
         return Size(
             int(round(small.width * ratio)),
             int(round(small.height * ratio))
