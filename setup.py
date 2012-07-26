@@ -7,5 +7,5 @@ setup(
                 'load images from various sources.',
     packages=['resizer'],
     platforms='any',
-    install_requires=['PIL>=1.1.6']
+    install_requires=['Pillow>=1.7.7']
 )
