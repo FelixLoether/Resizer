@@ -74,7 +74,6 @@ class Resizer(object):
 
     def _handle_crop(self, source, size, ext):
         width, height = self._get_projected_size(size, source)
-        print 'cropping to', width, height
         return self._handle_common(
             source.crop((0, 0, width, height)), size, ext
         )
