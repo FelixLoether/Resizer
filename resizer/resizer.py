@@ -29,7 +29,7 @@ class Resizer(object):
 
     def _parse_attrs(self, attrs):
         if len(attrs) == 3:
-            return Size(*attrs[:2]), attrs[3] or self.default_format
+            return Size(*attrs[:2]), attrs[2] or self.default_format
         elif len(attrs) == 2:
             return Size(*attrs), self.image.ext or self.default_format
         else:
