@@ -41,6 +41,7 @@ Constructs a new Image object from the given source.
 	- URL of an image.
 	- Path to an image in the local file system.
 	- A PIL Image object (the image will be copied).
+	- An Image object (will be copied).
 	- A readable file-like object.
 
 ### Resizer

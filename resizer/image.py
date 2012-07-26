@@ -12,11 +12,16 @@ class Image(object):
                 self._load_from_file_path(source)
         elif isinstance(source, pil_image.Image):
             self._load_from_pil_image(source)
+        elif isinstance(source, Image):
+            self._load_from_image(source)
         else:
             self._load_from_file_object(source)
 
         format = self._pil_image.format
         self.ext = format.lower() if format else None
+
+    def _load_from_image(self, source):
+        self._load_from_pil_image(source._pil_image)
 
     def _load_from_pil_image(self, source):
         self._pil_image = source.copy()
