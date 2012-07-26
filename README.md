@@ -17,8 +17,7 @@ Resizer helps you:
     
     for (k, im) in images.iteritems():
     	print '{0}.{1}: {2}'.format(k, im.ext, im.size)
-    	with open('%s.%s' % (k, im.ext), 'wb') as f:
-    		f.write(im.read())
+    	im.save('%s.%s' % (k, im.ext))
 
 The above code creates two cropped versions of the image loaded from the URL and outputs the following:
 
@@ -29,12 +28,10 @@ The above code creates two cropped versions of the image loaded from the URL and
 The API consists of two classes: `Image` and `Resizer`.
 
 ### Image
-Image is a read-only file-like class that abstracts loading images from various sources such as URLs.
+Image is a slight abstraction on top of PIL's Image class that abstracts loading images from various sources such as URLs. The Image class has all attributes and methods you would find on a PIL image.
 
 #### Attributes
 - `ext`: The extension of the image.
-- `size`: A two-tuple containing the width and height of the image.
-- `pil_image`: The PIL Image object for this image.
 
 #### Image(source)
 Constructs a new Image object from the given source.
@@ -45,12 +42,6 @@ Constructs a new Image object from the given source.
 	- Path to an image in the local file system.
 	- A PIL Image object (the image will be copied).
 	- A readable file-like object.
-
-#### *Image*.read(size=None)
-Read at most `size` bytes from the image (less if EOF is hit). If `size` is omitted or negative, reads all the data. The bytes are returned as a string object.
-
-#### *Image*.close()
-Closes the image. Attempting to do further operations raises a `ValueError`.
 
 ### Resizer
 Resizer is a utility class that helps resizing images to a set of given sizes.

@@ -15,18 +15,20 @@ class Image(object):
         else:
             self._load_from_file_object(source)
 
-        format = self.pil_image.format
+        format = self._pil_image.format
         self.ext = format.lower() if format else None
-        self.size = self.pil_image.size
 
     def _load_from_pil_image(self, source):
-        self.pil_image = source.copy()
+        self._pil_image = source.copy()
 
     def _load_from_file_path(self, source):
-        self.pil_image = pil_image.open(source)
+        self._pil_image = pil_image.open(source)
 
     def _load_from_url(self, source):
         self._load_from_file_object(StringIO(urllib2.urlopen(source).read()))
 
     def _load_from_file_object(self, source):
-        self.pil_image = pil_image.open(source)
+        self._pil_image = pil_image.open(source)
+
+    def __getattr__(self, attr):
+        return getattr(self._pil_image, attr)
