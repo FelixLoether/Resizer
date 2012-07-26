@@ -85,7 +85,7 @@ Resizer is a utility class that helps resizing images to a set of given sizes.
 Constructs a new resizer for the with the given sizes and configurations. See the Attributes section above for information about the arguments.
 
 #### *Resizer*.resize_image(image)
-Resizes `image` to each of the sizes.
+Resizes `image` to each of the sizes. The resulting images' width or height may be 1 pixel less than the requested size.
 
 ##### Parameters
 - `image`: Must be either an Image object or something the Image constructor can take as its `source` argument.
