@@ -8,10 +8,14 @@ Resizer helps you:
 
     from resizer import Resizer
     
-    resizer = Resizer({
-    	'thumbnail': (50, 50, 'jpeg'),
-    	'small': (100, 100, 'png'),
-    })
+    resizer = Resizer(
+    	precise=True,
+    	cropped=True,
+    	sizes={
+    		'thumbnail': (50, 50, 'jpeg'),
+    		'small': (100, 100, 'png'),
+    	}
+    )
     
     images = resizer.resize_image('http://placekitten.com/300/200')
     
@@ -21,8 +25,8 @@ Resizer helps you:
 
 The above code creates two cropped and resized versions of the image loaded from the URL and outputs the following:
 
-    thumbnail.jpeg: (50, 50)
-    small.png: (100, 100)
+    small.png: Size(width=100, height=100)
+	thumbnail.jpeg: Size(width=50, height=50)
     
 ## API Reference
 The API consists of two classes: `Image` and `Resizer`.
