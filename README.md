@@ -10,7 +10,7 @@ Resizer helps you:
     
     resizer = Resizer(
     	precise=True,
-    	cropped=True,
+    	crop=True,
     	sizes={
     		'thumbnail': (50, 50, 'jpeg'),
     		'small': (100, 100, 'png'),
