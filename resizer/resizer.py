@@ -70,7 +70,7 @@ class Resizer(object):
         raise ValueError('Image does not have the required aspect ratio.')
 
     def _handle_crop(self, source, size, ext):
-        width, height = self._get_crop_size(source, size)
+        width, height = self._get_projected_size(size, source)
         print 'cropping to', width, height
         return self._handle_common(
             source.crop((0, 0, width, height)), size, ext
@@ -99,6 +99,23 @@ class Resizer(object):
             return self._handle_resize_adaption(*args)
         else:
             raise ValueError('Unknown adaption mode.')
+
+    def _handle_downsize_adaption(self, *args):
+        return self._handle_common(*args)
+
+    def _handle_resize_adaption(self, source, size, ext):
+        width, height = self._get_projected_size(source, size)
+        image = source.resize(width, height)
+        return self._handle_common(image, size, ext)
+
+    def _get_projected_size(self, small, large):
+        width_ratio = float(large.width) / small.width
+        height_ratio = float(large.height) / small.height
+        ratio = min(width_ratio, height_ratio)
+        return Size(
+            int(round(small.width * ratio)),
+            int(round(small.height * ratio))
+        )
 
     def _is_smaller(self, a, b):
         return a.width < b.width or a.height < b.height
