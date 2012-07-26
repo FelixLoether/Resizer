@@ -19,7 +19,7 @@ Resizer helps you:
     	print '{0}.{1}: {2}'.format(k, im.ext, im.size)
     	im.save('%s.%s' % (k, im.ext))
 
-The above code creates two cropped versions of the image loaded from the URL and outputs the following:
+The above code creates two cropped and resized versions of the image loaded from the URL and outputs the following:
 
     thumbnail.jpeg: (50, 50)
     small.png: (100, 100)
