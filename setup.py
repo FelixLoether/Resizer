@@ -23,9 +23,14 @@ setup(
     author_email='resizer@loethr.net',
     description='Resizer helps you generate thumbnails and '
                 'load images from various sources.',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     packages=['resizer'],
     platforms='any',
     install_requires=['Pillow>=1.7.7'],
-    cmdclass={'test': PyTest}
+    cmdclass={'test': PyTest},
+    classifiers=[
+        'Programming Language :: Python',
+        'Operating System :: OS Independent',
+        'Intended Audience :: Developers',
+    ]
 )
