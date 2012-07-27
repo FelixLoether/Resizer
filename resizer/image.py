@@ -7,16 +7,16 @@ Size = namedtuple('Size', 'width height')
 
 
 class Image(object):
-    def __init__(self, source):
+    def __init__(self, source, copy=False):
         if isinstance(source, str) or isinstance(source, unicode):
             if source.startswith('https://') or source.startswith('http://'):
                 self._load_from_url(source)
             else:
                 self._load_from_file_path(source)
         elif isinstance(source, pil_image.Image):
-            self._load_from_pil_image(source)
+            self._load_from_pil_image(source, copy)
         elif isinstance(source, Image):
-            self._load_from_image(source)
+            self._load_from_image(source, copy)
         else:
             self._load_from_file_object(source)
 
@@ -35,11 +35,14 @@ class Image(object):
     def height(self):
         return self.size.height
 
-    def _load_from_image(self, source):
-        self._load_from_pil_image(source._pil_image)
+    def _load_from_image(self, source, copy):
+        self._load_from_pil_image(source._pil_image, copy)
 
-    def _load_from_pil_image(self, source):
-        self._pil_image = source.copy()
+    def _load_from_pil_image(self, source, copy):
+        if copy:
+            self._pil_image = source.copy()
+        else:
+            self._pil_image = source
 
     def _load_from_file_path(self, source):
         self._pil_image = pil_image.open(source)

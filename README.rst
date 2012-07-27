@@ -55,8 +55,8 @@ Attributes
 ext
     The extension of the image.
 
-Image(source)
--------------
+Image(source, copy=False)
+-------------------------
 
 Constructs a new Image object from the given source.
 
@@ -70,11 +70,17 @@ source
 
     - Path to an Image in the local file system.
 
-    - A PIL Image object (the image will be copied).
+    - A PIL Image object.
 
-    - An Image object (will be copied).
+    - An Image object.
 
     - A readable file-like object.
+
+copy
+    If the source is a PIL Image or an Image object, copy dictates whether the
+    source image will be copied instead of used directly. With Image objects
+    the Image object itself is always copied, the copy argument specifies
+    whether the underlying PIL Image should be copied or not.
 
 .. _Resizer:
 
