@@ -29,6 +29,7 @@ class TestImage(object):
         loaded_url = (
             flexmock(urllib2)
             .should_receive('urlopen')
+            .once()
             .with_args(url)
             .and_return(flexmock(read=lambda: self.test_image_data))
         )
@@ -50,6 +51,7 @@ class TestImage(object):
         opened = (
             flexmock(pil_image)
             .should_receive('open')
+            .once()
             .with_args(path)
             .and_return(flexmock(format='PNG'))
         )
@@ -72,6 +74,7 @@ class TestImage(object):
             opened = (
                 flexmock(pil_image)
                 .should_receive('open')
+                .once()
                 .with_args(f)
                 .and_return(flexmock(format='JPEG'))
             )
@@ -90,13 +93,13 @@ class TestImage(object):
 
     def test_loading_from_image_calls_copy(self):
         def callback():
-            called[0] = True
+            called[0] += 1
             return flexmock(format='JPEG')
 
-        called = [False]
+        called = [0]
         self.image._pil_image.copy = callback
         Image(self.image)
-        assert called[0]
+        assert called[0] == 1
 
     def test_loading_from_image_loads_correct_data(self):
         image = Image(self.image)
