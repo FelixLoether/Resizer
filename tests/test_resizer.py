@@ -60,7 +60,7 @@ class TestResizer(object):
         assert fake_image_stack.pop() is im
 
 
-class TestResizerPrivateMethods(object):
+class TestResizerInternalMethods(object):
     def setup_method(self, method):
         self.resizer = Resizer()
 
