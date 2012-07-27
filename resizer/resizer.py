@@ -18,7 +18,9 @@ class Resizer(object):
             raise ValueError('Sizes may not be None.')
 
         if not isinstance(image, Image):
-            image = Image(image)
+            # Don't copy, because we're not going to modify the image and we
+            # only hold onto it for a little while.
+            image = Image(image, copy=False)
         image = image
 
         images = {}
@@ -54,7 +56,8 @@ class Resizer(object):
         # height of this size should be treated as "max width" and "max
         # height".
         size = self._get_projected_size(source, size)
-        image = Image(source.resize(size, self.resize_mode))
+        # Don't copy because resize already creates a copy.
+        image = Image(source.resize(size, self.resize_mode), copy=False)
         image.ext = ext
         return image
 
@@ -75,7 +78,8 @@ class Resizer(object):
     def _handle_crop(self, source, size, ext):
         width, height = self._get_projected_size(size, source)
         return self._handle_common(
-            Image(source.crop((0, 0, width, height))), size, ext
+            # Cropping creates a copy already.
+            Image(source.crop((0, 0, width, height)), copy=False), size, ext
         )
 
     def _get_crop_size(self, source, size):
@@ -107,7 +111,8 @@ class Resizer(object):
 
     def _handle_resize_adaption(self, source, size, ext):
         width, height = self._get_projected_size(source, size, smallest=False)
-        image = Image(source.resize((width, height), self.resize_mode))
+        # Resizing creates a copy already.
+        image = Image(source.resize((width, height), self.resize_mode), False)
         return self._handle_size(image, size, ext)
 
     def _get_projected_size(self, small, large, smallest=True):
