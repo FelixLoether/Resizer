@@ -82,16 +82,6 @@ class Resizer(object):
             Image(source.crop((0, 0, width, height)), copy=False), size, ext
         )
 
-    def _get_crop_size(self, source, size):
-        # We know the source is at least as large as size.
-        width_ratio = float(source.width) / size.width
-        height_ratio = float(source.height) / size.height
-        ratio = min(width_ratio, height_ratio)
-        return Size(
-            int(round(size.width * ratio)),
-            int(round(size.height * ratio))
-        )
-
     def _handle_adaption(self, *args):
         if self.adaption_mode == 'ignore':
             return
