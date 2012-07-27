@@ -7,7 +7,7 @@ fake_image_stack = []
 
 
 class FakeImage(Image):
-    def __init__(self, source):
+    def __init__(self, source, copy=True):
         fake_image_stack.append(self)
         self.source = source
 
