@@ -55,8 +55,8 @@ Attributes
 ext
     The extension of the image.
 
-Image(source, copy=False)
--------------------------
+Image(source, copy=True)
+------------------------
 
 Constructs a new Image object from the given source.
 

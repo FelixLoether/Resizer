@@ -7,7 +7,7 @@ Size = namedtuple('Size', 'width height')
 
 
 class Image(object):
-    def __init__(self, source, copy=False):
+    def __init__(self, source, copy=True):
         if isinstance(source, str) or isinstance(source, unicode):
             if source.startswith('https://') or source.startswith('http://'):
                 self._load_from_url(source)
