@@ -19,22 +19,22 @@ class Resizer(object):
 
         if not isinstance(image, Image):
             image = Image(image)
-        self.image = image
+        image = image
 
         images = {}
 
         for (name, attrs) in self.sizes.iteritems():
-            img = self._handle_size(image, *self._parse_attrs(attrs))
+            img = self._handle_size(image, *self._parse_attrs(image, attrs))
             if img:
                 images[name] = img
 
         return images
 
-    def _parse_attrs(self, attrs):
+    def _parse_attrs(self, source, attrs):
         if len(attrs) == 3:
             return Size(*attrs[:2]), attrs[2] or self.default_format
         elif len(attrs) == 2:
-            return Size(*attrs), self.image.ext or self.default_format
+            return Size(*attrs), source.ext or self.default_format
         else:
             raise ValueError(
                 'Size attributes must be a two-tuple or a three-tuple.'
