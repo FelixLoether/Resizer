@@ -1,9 +1,22 @@
 import urllib2
-from collections import namedtuple
 from StringIO import StringIO
 from PIL import Image as pil_image
 
-Size = namedtuple('Size', 'width height')
+try:
+    from collections import namedtuple
+    Size = namedtuple('Size', 'width height')
+except ImportError:
+    class Size(object):
+        def __init__(self, width, height):
+            self.width = width
+            self.height = height
+
+        def __getitem(self, index):
+            if index == 0:
+                return self.width
+            if index == 1:
+                return self.height
+            raise IndexError()
 
 
 class Image(object):
