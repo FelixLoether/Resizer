@@ -3,7 +3,7 @@ from .image import Image, Size
 
 
 class Resizer(object):
-    def __init__(self, sizes=None, crop=False, precise=False,
+    def __init__(self, sizes=None, crop=True, precise=False,
                  default_format='png', adaption_mode='downsize',
                  resize_mode=ANTIALIAS):
         self.sizes = sizes

@@ -14,7 +14,6 @@ Sample
 
     resizer = Resizer(
         precise=True,
-        crop=True,
         sizes={
             'thumbnail': (50, 50),
             'small': (100, 100, 'png')
@@ -148,6 +147,8 @@ crop
     a different aspect ratio are cropped to the closest possible width and
     height that fit the aspect ratio of the size.
 
+    Has no effect if precise is False.
+
 Example::
 
     r = Resizer(precise=True, crop=True, sizes={'small': (50, 50)})
@@ -165,7 +166,7 @@ Example::
     imgs = r.resize_image('http://placekitten.com/300/200')
     # Previous line threw a ValueError, so this line is not reached.
 
-Resizer(sizes=None, crop=False, precise=False, default_format='png', adaption_mode='downsize', resize_mode=ANTIALIAS)
+Resizer(sizes=None, crop=True, precise=False, default_format='png', adaption_mode='downsize', resize_mode=ANTIALIAS)
 ---------------------------------------------------------------------------------------------------------------------
 
 Constructs a new resizer for with the given sizes and configurations. See the
