@@ -1,6 +1,6 @@
-=======
-Resizer
-=======
+==============
+Resizer Module
+==============
 .. image:: https://secure.travis-ci.org/FelixLoether/Resizer.png?branch=master
 
 Resizer helps you resize images to a set of given sizes (and load images from
@@ -38,8 +38,6 @@ API Reference
 -------------
 
 The API consists of two classes: Image_ and Resizer_.
-
-.. _Image:
 
 Image
 =====
@@ -81,8 +79,6 @@ copy
     source image will be copied instead of used directly. With Image objects
     the Image object itself is always copied, the copy argument specifies
     whether the underlying PIL Image should be copied or not.
-
-.. _Resizer:
 
 Resizer
 =======
