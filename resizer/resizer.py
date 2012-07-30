@@ -21,7 +21,6 @@ class Resizer(object):
             # Don't copy, because we're not going to modify the image and we
             # only hold onto it for a little while.
             image = Image(image, copy=False)
-        image = image
 
         images = {}
 
