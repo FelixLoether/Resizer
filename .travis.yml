@@ -6,4 +6,4 @@ python:
 install:
     - pip install -q -r requirements-dev.txt --use-mirrors
     - pip install -q . --use-mirrors
-test: python setup.py test
+script: python setup.py test
