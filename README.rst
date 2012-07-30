@@ -27,7 +27,7 @@ Sample
         im.save('%s.%s' % (k, im.ext))
 
 The above code creates two cropped and resized versions of the image loaded
-from the URL and outputs the following:
+from the URL and outputs the following::
 
     small.png: Size(width=100, height=100)
     thumbnail.jpeg: Size(width=50, height=50)
