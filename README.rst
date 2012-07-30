@@ -45,7 +45,7 @@ Image
 
 Image is a slight abstraction on top of PIL's Image class that abstracts
 loading images from various sources such as URLs. The Image class has all
-attributes and methods you would find on a PIL Image, but they return PIL
+attributes and methods you would find on a PIL Image, which return PIL
 Images instead of an instance of the Image object.
 
 Attributes
