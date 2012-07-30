@@ -1,3 +1,4 @@
+from __future__ import with_statement
 from flexmock import flexmock
 from PIL import Image as pil_image
 from PIL.Image import Image as PILImage

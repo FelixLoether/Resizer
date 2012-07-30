@@ -1,3 +1,4 @@
+from __future__ import with_statement
 from flexmock import flexmock
 from resizer import Resizer
 from resizer.image import Size

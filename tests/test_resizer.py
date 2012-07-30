@@ -1,3 +1,4 @@
+from __future__ import with_statement
 from contextlib import contextmanager
 from flexmock import flexmock
 from PIL.Image import ANTIALIAS, Image as PILImage
