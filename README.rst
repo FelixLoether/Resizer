@@ -2,8 +2,8 @@
 Resizer
 =======
 
-Resizer helps you generate different sized thumbnails and load images from
-various sources.
+Resizer helps you resize images to a set of given sizes (and load images from
+various sources such as URLs).
 
 ------
 Sample
