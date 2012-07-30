@@ -11,12 +11,27 @@ except ImportError:
             self.width = width
             self.height = height
 
-        def __getitem(self, index):
+        def __getitem__(self, index):
             if index == 0:
                 return self.width
             if index == 1:
                 return self.height
             raise IndexError()
+
+        def __len__(self):
+            return 2
+
+        def __eq__(self, other):
+            if isinstance(other, Size):
+                return (
+                    self.width == other.width and
+                    self.height == other.height
+                )
+            return (
+                len(other) == 2 and
+                self[0] == other[0] and
+                self[1] == other[1]
+            )
 
 
 class Image(object):
