@@ -32,5 +32,6 @@ setup(
         'Programming Language :: Python',
         'Operating System :: OS Independent',
         'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
     ]
 )
