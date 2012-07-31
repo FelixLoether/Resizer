@@ -33,6 +33,12 @@ except ImportError:
                 self[1] == other[1]
             )
 
+        def __str__(self):
+            return 'Size(width=%s, height=%s)' % (self[0], self[1])
+
+        def __repr__(self):
+            return str(self)
+
 
 class Image(object):
     def __init__(self, source, copy=True):
