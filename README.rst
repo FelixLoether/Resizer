@@ -17,7 +17,8 @@ Sample
         precise=True,
         sizes={
             'thumbnail': (50, 50),
-            'small': (100, 100, 'png')
+            'small': (100, 100, 'png'),
+            'original': []
         }
     )
 
@@ -27,11 +28,13 @@ Sample
         print '{0}.{1}: {2}'.format(k, im.ext, im.size)
         im.save('%s.%s' % (k, im.ext))
 
-The above code creates two cropped and resized versions of the image loaded
-from the URL and outputs the following::
+The above code creates three versions of the image loaded from the URL (two
+cropped and resized ones and one that's a duplicate of the original image)
+and outputs the following::
 
     small.png: Size(width=100, height=100)
     thumbnail.jpeg: Size(width=50, height=50)
+    original.jpeg: Size(width=300, height=200)
 
 -------------
 API Reference
@@ -99,11 +102,17 @@ resize_mode
     ``PIL.Image.BILINEAR``.
 
 sizes
-    A dict containing two-tuples (width, height) and/or three-tuples (width,
-    height, format) for each of the sizes (keys). If format is specified for a
-    size, the result image will always be in that format. Otherwise, it remains
-    in the original image's format (or uses the default_format if the original
-    has no format).
+    A dict containing lists or tuples with 0 to 3 items for each of the sizes
+    (keys):
+
+    - zero items: ``[]``
+    - one item: ``[format]``
+    - two items: ``[width, height]``
+    - three items: ``[width, height, format]``
+
+    If format is specified for a size, the result image will always be in that
+    format. Otherwise, it remains in the original image's format (or uses the
+    default_format if the original has no format).
 
 .. _adaption_mode:
 
