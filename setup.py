@@ -17,7 +17,7 @@ class PyTest(Command):
 
 setup(
     name='Resizer',
-    version='0.0.1',
+    version='0.1.0',
     url='http://github.com/FelixLoether/resizer',
     author='Oskari Hiltunen',
     author_email='resizer@loethr.net',
