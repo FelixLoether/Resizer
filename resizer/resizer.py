@@ -32,16 +32,23 @@ class Resizer(object):
         return images
 
     def _parse_attrs(self, source, attrs):
-        if len(attrs) == 3:
-            return Size(*attrs[:2]), attrs[2] or self.default_format
+        if attrs is None or len(attrs) == 0:
+            return None, source.ext or self.default_format
+        elif len(attrs) == 1:
+            return None, attrs[0] or self.default_format
         elif len(attrs) == 2:
             return Size(*attrs), source.ext or self.default_format
+        elif len(attrs) == 3:
+            return Size(*attrs[:2]), attrs[2] or self.default_format
         else:
-            raise ValueError(
-                'Size attributes must be a two-tuple or a three-tuple.'
-            )
+            raise ValueError('Invalid size')
 
     def _handle_size(self, source, size, ext):
+        if size is None:
+            image = Image(source)
+            image.ext = ext
+            return image
+
         if self._is_smaller(source, size):
             return self._handle_adaption(source, size, ext)
 

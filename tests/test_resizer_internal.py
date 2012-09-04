@@ -34,12 +34,18 @@ class TestResizerInternalMethods(object):
         )
         assert attrs[1] is ext
 
-    def test_parse_attrs_raises_value_error_for_one_tuples(self):
-        try:
-            self.resizer._parse_attrs(None, (0,))
-        except ValueError:
-            return
-        assert False
+    def test_parse_attrs_parses_one_tuples(self):
+        ext = object()
+        attrs = self.resizer._parse_attrs(None, [ext])
+        assert attrs[0] is None
+        assert attrs[1] is ext
+
+    def test_parse_attrs_parses_zero_tuples(self):
+        ext = object()
+        im = flexmock(ext=ext)
+        attrs = self.resizer._parse_attrs(im, [])
+        assert attrs[0] is None
+        assert attrs[1] is ext
 
     def test_parse_attrs_raises_value_error_for_four_tuples(self):
         try:
@@ -457,7 +463,7 @@ class TestResizerInternalMethods(object):
         (flexmock(self.resizer)
             .should_receive('_handle_precise')
             .and_raise(AssertionError('Not supposed to be called')))
-        self.resizer._handle_size(None, None, None)
+        self.resizer._handle_size(None, object(), None)
 
     def test_handle_size_doesnt_call_precise_if_is_smaller(self):
         self.resizer.precise = True
@@ -465,7 +471,7 @@ class TestResizerInternalMethods(object):
         (flexmock(self.resizer)
             .should_receive('_handle_precise')
             .and_raise(AssertionError('Not supposed to be called')))
-        self.resizer._handle_size(None, None, None)
+        self.resizer._handle_size(None, object(), None)
 
     def test_handle_size_calls_common_if_isnt_smaller_and_isnt_precise(self):
         source, size, ext = self._mock_handle_size(False, handle_common=False)
@@ -486,7 +492,7 @@ class TestResizerInternalMethods(object):
         (flexmock(self.resizer)
             .should_receive('_handle_common')
             .and_raise(AssertionError('Not supposed to be called')))
-        self.resizer._handle_size(None, None, None)
+        self.resizer._handle_size(None, object(), None)
 
     def test_handle_size_doesnt_call_common_if_is_precise(self):
         self.resizer.precise = True
@@ -494,7 +500,7 @@ class TestResizerInternalMethods(object):
         (flexmock(self.resizer)
             .should_receive('_handle_common')
             .and_raise(AssertionError('Not supposed to be called')))
-        self.resizer._handle_size(None, None, None)
+        self.resizer._handle_size(None, object(), None)
 
     def test_resize_image_calls_handle_size_for_all_sizes(self):
         pa_stack = []
