@@ -165,7 +165,7 @@ API Reference
 
     .. method:: resize_image(image)
 
-        Resizes *image* to each of the sizes.
+        Resizes ``image`` to each of the sizes.
 
         :param image: The image to resize.
         :type image: :class:`Image` or something its constructor can take as its ``source`` argument
