@@ -2,3 +2,4 @@
 .coverage
 *.pyc
 *.DS_Store
+docs/_build/
